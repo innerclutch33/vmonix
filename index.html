@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vmonix</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+
+<body>
+
+  <div class="app">
+
+    <h1>Vmonix</h1>
+    <p class="subtitle">AI Creator Toolkit</p>
+
+    <div class="grid">
+
+      <button onclick="openTool('Title Generator')">YouTube Titles</button>
+      <button onclick="openTool('Hook Generator')">Hooks</button>
+      <button onclick="openTool('Script Generator')">Scripts</button>
+      <button onclick="openTool('Caption Generator')">Captions</button>
+      <button onclick="openTool('Hashtags')">Hashtags</button>
+      <button onclick="openTool('Ideas')">Ideas</button>
+
+    </div>
+
+    <div class="tool-box">
+      <h2 id="toolName">Select a tool</h2>
+
+      <input id="input" placeholder="Enter topic..." />
+
+      <button onclick="generate()">Generate</button>
+
+      <div class="output" id="output"></div>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
