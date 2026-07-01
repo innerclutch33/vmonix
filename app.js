@@ -13,8 +13,21 @@ async function generate() {
     alert("Enter a topic first");
     return;
   }
+  let history = [];
 
-  document.getElementById("output").innerText = "Generating...";
+function saveResult(result) {
+  history.push({
+    tool: currentTool,
+    input: document.getElementById("input").value,
+    output: result,
+    time: new Date().toISOString()
+  });
+
+  localStorage.setItem("vmonix_history", JSON.stringify(history));
+}
+
+  document.getElementById("output").innerText = result;
+saveResult(result);
 
   let prompt = buildPrompt(currentTool, input);
 
@@ -42,26 +55,77 @@ async function generate() {
 }
 
 function buildPrompt(tool, input) {
+  const baseStyle =
+    "You are an expert content strategist who writes viral, high-engagement social media content. Keep outputs practical, structured, and ready to use.";
+
   switch (tool) {
+
     case "YouTube Titles":
-      return `Generate 5 viral YouTube titles for: ${input}`;
+      return `${baseStyle}
+Create 5 HIGH CTR YouTube titles for the topic: "${input}"
+Rules:
+- Make them curiosity-driven
+- Avoid generic wording
+- Use power words
+- Keep under 60 characters each
+Format as a numbered list.`;
 
     case "Hook Generator":
-      return `Write a powerful 3-second hook for a video about: ${input}`;
+      return `${baseStyle}
+Write 5 viral video hooks (first 3 seconds) for: "${input}"
+Rules:
+- Must create curiosity or shock
+- Short and punchy
+- 1–2 lines max each
+Format as numbered list.`;
 
     case "Script Generator":
-      return `Write a short engaging video script (30-60 sec) about: ${input}`;
+      return `${baseStyle}
+Write a 45–60 second short-form video script about: "${input}"
+Rules:
+- Hook → Problem → Value → Ending line
+- Natural speaking tone
+- Easy to read aloud
+Format clearly with sections.`;
 
     case "Captions":
-      return `Write 5 Instagram captions for: ${input}`;
+      return `${baseStyle}
+Generate 10 Instagram captions for: "${input}"
+Rules:
+- Mix emotional + engaging + minimal captions
+- Add emojis where natural
+- No boring generic lines
+Format as list.`;
 
     case "Hashtags":
-      return `Generate trending hashtags for: ${input}`;
+      return `${baseStyle}
+Generate 25 trending hashtags for: "${input}"
+Rules:
+- Mix niche + broad hashtags
+- No repetition
+- No explanation, only hashtags`;
 
     case "Ideas":
-      return `Give 10 viral content ideas for: ${input}`;
+      return `${baseStyle}
+Give 10 viral content ideas for: "${input}"
+Rules:
+- Must be unique and practical
+- Focus on trending short-form content
+- No generic ideas
+Format as numbered list.`;
 
     default:
       return input;
   }
+}
+function copyText() {
+  let text = document.getElementById("output").innerText;
+
+  if (!text) {
+    alert("Nothing to copy");
+    return;
+  }
+
+  navigator.clipboard.writeText(text);
+  alert("Copied to clipboard");
 }

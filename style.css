@@ -58,3 +58,14 @@ input {
   min-height: 60px;
   text-align: left;
 }
+button {
+  transition: 0.2s ease;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+.output {
+  white-space: pre-line;
+}
