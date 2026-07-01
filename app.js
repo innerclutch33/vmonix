@@ -106,3 +106,48 @@ Give 10 content ideas for: "${input}"`;
       return input;
   }
 }
+let favorites = JSON.parse(localStorage.getItem("vmonix_favorites")) || [];
+
+function saveFavorite() {
+  const data = {
+    tool: currentTool,
+    input: document.getElementById("input").value,
+    output: document.getElementById("output").innerText,
+    time: new Date().toISOString()
+  };
+
+  favorites.push(data);
+  localStorage.setItem("vmonix_favorites", JSON.stringify(favorites));
+
+  alert("Saved to favorites");
+}
+function shareResult() {
+  let text = document.getElementById("output").innerText;
+
+  if (!text) return alert("Nothing to share");
+
+  const shareText = `Generated using Vmonix AI:\n\n${text}`;
+
+  if (navigator.share) {
+    navigator.share({
+      title: "Vmonix AI Result",
+      text: shareText
+    });
+  } else {
+    navigator.clipboard.writeText(shareText);
+    alert("Copied for sharing");
+  }
+}
+let generateCount = 0;
+
+function trackAds() {
+  generateCount++;
+
+  if (generateCount % 3 === 0) {
+    console.log("Show interstitial ad here");
+    // AdMob / AdSense interstitial trigger later
+  }
+}
+function getHistory() {
+  return JSON.parse(localStorage.getItem("vmonix_history")) || [];
+}
